@@ -1,14 +1,14 @@
 import events from './mixins/events'
 import draggableMixin from './mixins/draggable'
-import React, {
-  PropTypes
-} from 'react'
+import React from 'react'
+import createClass from 'create-react-class'
+import PropTypes from 'prop-types'
 import {
   View,
   Image
 } from 'react-native'
 
-export default React.createClass({
+export default createClass({
   mixins: [events(['onLayout']), draggableMixin()],
 
   propTypes: {
@@ -24,7 +24,7 @@ export default React.createClass({
     source: PropTypes.any
   },
 
-  componentDidMount () {
+  componentDidMount() {
     this.layoutStream.subscribe(
       (layout) => this.container.setNativeProps({
         style: this.props.toStyle(layout)
@@ -33,11 +33,11 @@ export default React.createClass({
     )
   },
 
-  render () {
+  render() {
     let props = {
       ref: (container) => this.container = container,
       style: this.props.style,
-      onLayout: ({nativeEvent}) => {
+      onLayout: ({ nativeEvent }) => {
         this.onLayout.onNext(nativeEvent)
       },
       type: this.props.type || 'View',
@@ -51,8 +51,8 @@ export default React.createClass({
             {this.props.children}
           </View>
         ) : (
-          <Image {...props} />
-        )}
+            <Image {...props} />
+          )}
       </View>
     )
   }
